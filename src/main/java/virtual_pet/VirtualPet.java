@@ -1,6 +1,5 @@
 package virtual_pet;
 import java.util.Random;
-import java.util.Scanner;
 
 public class VirtualPet {
     // Input the instance variable for each pet
@@ -47,20 +46,19 @@ public class VirtualPet {
         }
     }
 
-    // Lists the "stats" of the pet
-//    public void status() {
-//        System.out.println("Name: " + name);
-//        System.out.println("Hunger: " + hunger);
-//        System.out.println("Boredom: " + boredom);
-//    }
+
 
     public String getVisualRepresentation() {
         if (hunger > 75 && boredom > 75) {
+            // This is show the inputs of the pet when the hunger and boredom in under 75
             return "😔 Hunger: "+hunger +"  Boredom: "+ boredom;
+            // If only the hunger is below 75
         } else if (hunger > 75) {
             return "😔 Hunger: "+hunger +"  Boredom: "+ boredom;
+            // If only the boredom is below 75
         } else if (boredom > 75) {
             return "😔 Hunger: "+hunger +"  Boredom: "+ boredom;
+            // If both are both 75
         } else {
             return "😊 Hunger: "+hunger +"  Boredom: "+ boredom;
         }
@@ -69,6 +67,19 @@ public class VirtualPet {
     public void status() {
         System.out.println("Name: " + name);
         System.out.println(getVisualRepresentation());
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+
+    public int getHunger() {
+        return this.hunger;
+    }
+
+    public int getBoredom() {
+        return this.boredom;
     }
 }
 
