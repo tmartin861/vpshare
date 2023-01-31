@@ -8,7 +8,7 @@ public class VirtualPetApp {
         VirtualPetShelter shelter = new VirtualPetShelter();
 
         while (true) {
-            // Welcome the user and present the options they can chose
+            // Welcome the user and present the options they can choose
             System.out.println("Welcome to the Virtual Pet Shelter!");
             System.out.println("1. Admit a pet");
             System.out.println("2. View all pets");
