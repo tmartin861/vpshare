@@ -8,63 +8,94 @@ public class VirtualPetApp {
         VirtualPetShelter shelter = new VirtualPetShelter();
 
         while (true) {
-            // Welcome the user and present the options they can choose
             System.out.println("Welcome to the Virtual Pet Shelter!");
             System.out.println("1. Admit a pet");
             System.out.println("2. View all pets");
             System.out.println("3. Play with a pet");
             System.out.println("4. Feed all pets");
             System.out.println("5. Adopt a pet");
-            System.out.println("6. Quit");
+            System.out.println("6. Walk a pet");
+            System.out.println("7. Perform maintenance on a pet");
+            System.out.println("8. Clean a pet");
+            System.out.println("9. Quit");
 
-            // Input of user
             int userChoice = input.nextInt();
             input.nextLine();
 
-            // Start with user choosing 1
-            // Ask user for name of pet
             if (userChoice == 1) {
+                System.out.println("What type of pet would you like to admit? (Organic Dog, Organic Cat, Robotic Dog, Robotic Cat)");
+                String petType = input.nextLine();
                 System.out.println("What is the pet's name?");
                 String petName = input.nextLine();
-                VirtualPet newPet = new VirtualPet(petName);
-                // Put pet into shelter
+
+                VirtualPet newPet;
+                if (petType.equalsIgnoreCase("Organic Dog")) {
+                    newPet = new OrganicDog(petName);
+                } else if (petType.equalsIgnoreCase("Organic Cat")) {
+                    newPet = new OrganicCat(petName);
+                } else if (petType.equalsIgnoreCase("Robotic Dog")) {
+                    newPet = new RoboticDog(petName);
+                } else if (petType.equalsIgnoreCase("Robotic Cat")) {
+                    newPet = new RoboticCat(petName);
+                } else {
+                    System.out.println("Invalid pet type");
+                    continue;
+                }
                 shelter.admitPet(newPet);
-                // Tell the user the pet has been added
                 System.out.println(petName + " has been admitted to the shelter.");
-                // If user chooses 2, show all the pets they admitted
             } else if (userChoice == 2) {
                 for (VirtualPet pet : shelter.pets) {
-                    System.out.println(pet.getName() + ": Hunger: " + pet.getHunger() + " Boredom: " + pet.getBoredom());
+                    System.out.println(pet.getName() + " " + pet.getVisualRepresentation());
                 }
-                // If user chooses 3, ask which pet the user wants to play
             } else if (userChoice == 3) {
                 System.out.println("Which pet would you like to play with?");
                 String petName = input.nextLine();
-                // Compare user input to shelter
                 shelter.playWithPet(petName);
-                // Tell the user who they played with
                 System.out.println("You played with " + petName + ".");
-                // If user chooses option 4, feed all pets
             } else if (userChoice == 4) {
                 shelter.feedAllPets();
-                // Tell the user that all pets were fed
                 System.out.println("All pets have been fed!");
-                // If user chooses 5, allow the user to adopt a pet
             } else if (userChoice == 5) {
-                // Ask the user which pet they would like to adopt
                 System.out.println("Which pet would you like to adopt?");
                 String petName = input.nextLine();
-                // Pulls pet from the adoptPet method
                 VirtualPet adoptedPet = shelter.adoptPet(petName);
-                // Tells the user the pet has been adopted
                 System.out.println(adoptedPet.getName() + " has been adopted!");
-                // If user chooses 6, tell bye and quit the program
             } else if (userChoice == 6) {
+                System.out.println("Which pet would you like to walk?");
+                String petName = input.nextLine();
+                VirtualPet petToWalk = shelter.getPetByName(petName);
+                if (petToWalk == null) {
+                    System.out.println("Pet not found");
+                    continue;
+                }
+                petToWalk.walk();
+                System.out.println("You walked " + petName + ".");
+            } else if (userChoice == 7) {
+                System.out.println("Which pet would you like to perform maintenance on?");
+                String petName = input.nextLine();
+                RoboticPet petToMaintenance = shelter.getRoboticPetByName(petName);
+                if (petToMaintenance == null) {
+                    System.out.println("Pet not found or not a robotic pet");
+                    continue;
+                }
+                petToMaintenance.performMaintenance();
+                System.out.println("Maintenance performed on " + petName + ".");
+            } else if (userChoice == 8) {
+                System.out.println("Which pet would you like to clean?");
+                String petName = input.nextLine();
+                OrganicPet petToClean = shelter.getOrganicPetByName(petName);
+                if (petToClean == null) {
+                    System.out.println("Pet not found or not an organic pet");
+                    continue;
+                }
+                petToClean.clean();
+                System.out.println("Cage/litter box cleaned for " + petName + ".");
+            } else if (userChoice == 9) {
                 System.out.println("Bye!");
                 break;
             }
+            shelter.tick();
         }
-        shelter.tick();
         input.close();
     }
 }
